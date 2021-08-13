@@ -85,9 +85,9 @@ var Skyblock = &util.Command{
 		fontBytes, _ := ioutil.ReadFile("../resources/Ubuntu.ttf")
 		f, _ := truetype.Parse(fontBytes)
 		opts := truetype.Options{}
-		opts.Size = 20
+		opts.Size = 12
 		bg, fg := color.RGBA{46, 52, 64, 255}, color.RGBA{129, 161, 193, 255}
-		rgba := image.NewRGBA(image.Rect(0, 0, 1000, 1000))
+		rgba := image.NewRGBA(image.Rect(0, 0, 600, 600))
 		draw.Draw(rgba, rgba.Bounds(), &image.Uniform{bg}, image.Point{}, draw.Src)
 		c := freetype.NewContext()
 		c.SetFont(f)
@@ -96,7 +96,7 @@ var Skyblock = &util.Command{
 		c.SetDst(rgba)
 		c.SetSrc(&image.Uniform{fg})
 		text := strings.Split(message, "\n")
-		pt := freetype.Pt(500, 10+int(c.PointToFixed(20)>>6))
+		pt := freetype.Pt(300, 10+int(c.PointToFixed(20)>>6))
 		for _, s := range text {
 			_, err = c.DrawString(s, pt)
 			if err != nil {
@@ -106,7 +106,7 @@ var Skyblock = &util.Command{
 			pt.Y += c.PointToFixed(opts.Size * 1.5)
 		}
 
-		sp2 := image.Point{skin.Bounds().Dx(), 274}
+		sp2 := image.Point{skin.Bounds().Dx()-150, 75}
 		r2 := image.Rectangle{sp2, sp2.Add(skin.Bounds().Size())}
 		draw.Draw(rgba, r2, skin, image.Point{0, 0}, draw.Over)
 
