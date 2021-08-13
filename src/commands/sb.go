@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"bufio"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -11,7 +10,6 @@ import (
 	"image/png"
 	"io/ioutil"
 	"log"
-	"os"
 	"strings"
 
 	"hypixel-bot/src/util"
@@ -112,27 +110,11 @@ var Skyblock = &util.Command{
 		r2 := image.Rectangle{sp2, sp2.Add(skin.Bounds().Size())}
 		draw.Draw(rgba, r2, skin, image.Point{0, 0}, draw.Over)
 
-		outFile, err := os.Create("out.png")
-		if err != nil {
-			log.Fatal(err)
-		}
+		buffer := &bytes.Buffer{}
+		err = png.Encode(buffer, rgba)
+		if err != nil {return}
 
-		defer outFile.Close()
-		b := bufio.NewWriter(outFile)
-		err = png.Encode(b, rgba)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		err = b.Flush()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		imageFile, _ := os.Open("out.png")
-		defer imageFile.Close()
-
-		photosPhoto, err := vk.UploadMessagesPhoto(198657266, imageFile)
+		photosPhoto, err := vk.UploadMessagesPhoto(198657266, buffer)
 		if err != nil {
 			log.Fatalf("Error uploading photo: %s", err)
 		}
@@ -147,4 +129,8 @@ var Skyblock = &util.Command{
 		}
 		return
 	},
+}
+
+func Sb(name string, peer int) {
+	Skyblock.Trigger(name, peer)
 }
