@@ -25,7 +25,7 @@ var Skyblock = &util.Command{
 	Name:      "sb",
 	Args:      1,
 	ForAdmins: false,
-	Trigger: func(name string, peer_id int) (err error) {
+	Trigger: func(name string, peer_id int, from_id int) (err error) {
 		vk := api.NewVK(util.Token)
 		mojang, err := util.GetUUID(name)
 		if err != nil {
@@ -131,6 +131,6 @@ var Skyblock = &util.Command{
 	},
 }
 
-func Sb(name string, peer int) {
-	Skyblock.Trigger(name, peer)
+func Sb(name string, peer int, from_id int) {
+	Skyblock.Trigger(name, peer, from_id)
 }

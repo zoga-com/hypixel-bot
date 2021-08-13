@@ -72,7 +72,7 @@ type Command struct {
 	Name      string
 	Args      int
 	ForAdmins bool
-	Trigger   func(name string, peer_id int) (err error)
+	Trigger   func(name string, peer_id int, from_id int) (err error)
 }
 
 // status endpoint

@@ -9,7 +9,7 @@ import (
 	"github.com/SevereCloud/vksdk/v2/events"
 )
 
-var commandRegex = regexp.MustCompile("^[.]([^ ]+)( .+)*$")
+var commandRegex = regexp.MustCompile("^[./]([^ ]+)( .+)*$")
 var Commands = []*util.Command{Bedwars, Skywars, Where, Auction, Skyblock}
 
 func FindCommand(obj events.MessageNewObject) {
@@ -37,7 +37,7 @@ func FindCommand(obj events.MessageNewObject) {
 				}
 
 				if it.Args == command.Args {
-					err := it.Trigger(args[1], obj.Message.PeerID)
+					err := it.Trigger(args[1], obj.Message.PeerID, obj.Message.FromID)
 					if err != nil {
 						util.SendMessage(obj.Message.PeerID, fmt.Sprintf("Произошла ошибка: %s (Игрока не существует?)", err))
 					}
