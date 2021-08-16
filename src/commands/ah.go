@@ -50,7 +50,7 @@ var Auction = &util.Command{
 	Name:      "ah",
 	Args:      1,
 	ForAdmins: false,
-	Trigger: func(name string, peer_id int) (err error) {
+	Trigger: func(name string, peer_id int, from_id int) (err error) {
 		mojang, err := util.GetUUID(name)
 		if err != nil {
 			return

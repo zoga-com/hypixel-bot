@@ -9,7 +9,7 @@ var Bedwars = &util.Command{
 	Name:      "bw",
 	Args:      1,
 	ForAdmins: false,
-	Trigger: func(name string, peer_id int) (err error) {
+	Trigger: func(name string, peer_id int, from_id int) (err error) {
 		player, err := util.GetPlayer(name)
 		if err != nil {
 			return
