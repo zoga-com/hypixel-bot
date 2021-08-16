@@ -88,6 +88,15 @@ type Status struct {
 	}
 }
 
+type Status2 struct {
+	Success bool   `json:"success"`
+
+	Player struct {
+		LastLogin   int64   `json:"lastLogin"`
+		LastLogout int64 `json:"lastLogout"`
+	}
+}
+
 // skyblock shit god bless
 
 type Profile struct {
