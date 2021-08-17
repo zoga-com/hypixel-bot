@@ -41,7 +41,7 @@ func main() {
 	lp.MessageNew(func(_ context.Context, obj events.MessageNewObject) {
 		log.Printf("%d: %s from %d", obj.Message.PeerID, obj.Message.Text, obj.Message.FromID)
 
-		if obj.Message.FromID == 351445954 && obj.Message.Text != "" {
+		if obj.Message.FromID == -1 && obj.Message.Text != "" {
 			fontBytes, _ := ioutil.ReadFile("../resources/Ubuntu.ttf")
 			f, _ := truetype.Parse(fontBytes)
 			opts := truetype.Options{}
