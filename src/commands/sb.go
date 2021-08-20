@@ -43,7 +43,7 @@ var Skyblock = &util.Command{
 			log.Fatal(err)
 		}
 
-		_, res, err = fasthttp.Get(nil, "https://crafatar.com/renders/body/"+mojang.Id+"?overlay&scale=10")
+		_, res, err = fasthttp.Get(nil, "https://visage.surgeplay.com/full/448/" + mojang.Id)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -106,7 +106,7 @@ var Skyblock = &util.Command{
 			pt.Y += c.PointToFixed(opts.Size * 1.5)
 		}
 
-		sp2 := image.Point{skin.Bounds().Dx()-150, 75}
+		sp2 := image.Point{skin.Bounds().Dx()-250, 75}
 		r2 := image.Rectangle{sp2, sp2.Add(skin.Bounds().Size())}
 		draw.Draw(rgba, r2, skin, image.Point{0, 0}, draw.Over)
 
