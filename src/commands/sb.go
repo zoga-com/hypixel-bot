@@ -79,8 +79,8 @@ var Skyblock = &util.Command{
 			member.Skills.Alchemy.Level, member.Skills.Alchemy.Progress*100,
 			member.Skills.Carpentry.Level, member.Skills.Carpentry.Progress*100,
 			member.Skills.Runecrafting.Level, member.Skills.Runecrafting.Progress*100,
-			member.Slayers.Zombie.Xp+member.Slayers.Enderman.Xp+member.Slayers.Spider.Xp+member.Slayers.Wolf.Xp,
-			member.Slayers.Zombie.Claimed, member.Slayers.Spider.Claimed, member.Slayers.Wolf.Claimed, member.Slayers.Enderman.Claimed,
+			member.Slayers.Zombie.Xp + member.Slayers.Enderman.Xp + member.Slayers.Spider.Xp + member.Slayers.Wolf.Xp,
+			util.GetSlayerFromXp(member.Slayers.Zombie.Xp), util.GetSlayerFromXp(member.Slayers.Spider.Xp), util.GetSlayerFromXp(member.Slayers.Wolf.Xp), util.GetSlayerFromXp(member.Slayers.Enderman.Xp),
 			member.Slayers.Zombie.Xp, member.Slayers.Spider.Xp, member.Slayers.Wolf.Xp, member.Slayers.Enderman.Xp)
 		fontBytes, _ := ioutil.ReadFile("../resources/Ubuntu.ttf")
 		f, _ := truetype.Parse(fontBytes)

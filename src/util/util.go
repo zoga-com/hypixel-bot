@@ -79,3 +79,17 @@ func SendMessage(peer_id int, message string) (err error) {
 	}
 	return
 }
+
+func GetSlayerFromXp(xp int) (level int) {
+	xp_table := Slayer_xp
+
+	for i, x := range xp_table {
+		if x > xp {
+			break
+		} else {
+			level = i
+		}
+	}
+
+	return level
+}
