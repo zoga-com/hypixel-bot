@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"regexp"
+	"time"
 
 	"github.com/valyala/fasthttp"
 
@@ -14,9 +16,14 @@ import (
 var Token = os.Getenv("VK_TOKEN")
 var HypixelKey = os.Getenv("HYPIXEL_KEY")
 var vk = api.NewVK(Token)
+var NameRegex = regexp.MustCompile("[a-zA-Z0-9_]{3,16}")
+
+var Client = fasthttp.Client{
+	ReadTimeout: time.Second*10,
+}
 
 func GetHypixelApi(method string, args string) (response string, err error) {
-	_, res, err := fasthttp.Get(nil, "https://api.hypixel.net/"+method+"?key="+HypixelKey+args)
+	_, res, err := Client.Get(nil, "https://api.hypixel.net/"+method+"?key="+HypixelKey+args)
 	if err != nil {
 		return
 	}
@@ -24,7 +31,7 @@ func GetHypixelApi(method string, args string) (response string, err error) {
 }
 
 func GetUUID(name string) (mojang *Mojang, err error) {
-	_, res, err := fasthttp.Get(nil, "https://api.mojang.com/users/profiles/minecraft/"+name)
+	_, res, err := Client.Get(nil, "https://api.mojang.com/users/profiles/minecraft/"+name)
 
 	if err != nil {
 		return
@@ -39,7 +46,7 @@ func GetUUID(name string) (mojang *Mojang, err error) {
 }
 
 func GetName(uuid string) string {
-	_, res, err := fasthttp.Get(nil, "https://api.mojang.com/user/profiles/"+uuid+"/names")
+	_, res, err := Client.Get(nil, "https://api.mojang.com/user/profiles/"+uuid+"/names")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -65,6 +72,10 @@ func GetPlayer(name string) (response Player, err error) {
 		return
 	}
 	return player.Player, err
+}
+
+func MatchUsername(name string) bool {
+	return NameRegex.Match([]byte(name))
 }
 
 func SendMessage(peer_id int, message string) (err error) {
