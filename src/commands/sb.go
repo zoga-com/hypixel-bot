@@ -43,7 +43,7 @@ var Skyblock = &util.Command{
 			log.Fatal(err)
 		}
 
-		_, res, err = fasthttp.Get(nil, "https://visage.surgeplay.com/full/448/" + mojang.Id)
+		_, res, err = fasthttp.Get(nil, "https://visage.surgeplay.com/full/448/"+mojang.Id)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -79,7 +79,7 @@ var Skyblock = &util.Command{
 			member.Skills.Alchemy.Level, member.Skills.Alchemy.Progress*100,
 			member.Skills.Carpentry.Level, member.Skills.Carpentry.Progress*100,
 			member.Skills.Runecrafting.Level, member.Skills.Runecrafting.Progress*100,
-			member.Slayers.Zombie.Xp + member.Slayers.Enderman.Xp + member.Slayers.Spider.Xp + member.Slayers.Wolf.Xp,
+			member.Slayers.Zombie.Xp+member.Slayers.Enderman.Xp+member.Slayers.Spider.Xp+member.Slayers.Wolf.Xp,
 			util.GetSlayerFromXp(member.Slayers.Zombie.Xp), util.GetSlayerFromXp(member.Slayers.Spider.Xp), util.GetSlayerFromXp(member.Slayers.Wolf.Xp), util.GetSlayerFromXp(member.Slayers.Enderman.Xp),
 			member.Slayers.Zombie.Xp, member.Slayers.Spider.Xp, member.Slayers.Wolf.Xp, member.Slayers.Enderman.Xp)
 		fontBytes, _ := ioutil.ReadFile("../resources/Ubuntu.ttf")
@@ -106,13 +106,15 @@ var Skyblock = &util.Command{
 			pt.Y += c.PointToFixed(opts.Size * 1.5)
 		}
 
-		sp2 := image.Point{skin.Bounds().Dx()-250, 75}
+		sp2 := image.Point{skin.Bounds().Dx() - 250, 75}
 		r2 := image.Rectangle{sp2, sp2.Add(skin.Bounds().Size())}
 		draw.Draw(rgba, r2, skin, image.Point{0, 0}, draw.Over)
 
 		buffer := &bytes.Buffer{}
 		err = png.Encode(buffer, rgba)
-		if err != nil {return}
+		if err != nil {
+			return
+		}
 
 		photosPhoto, err := vk.UploadMessagesPhoto(198657266, buffer)
 		if err != nil {

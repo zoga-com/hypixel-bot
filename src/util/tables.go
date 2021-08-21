@@ -1,7 +1,6 @@
 package util
 
 var Slayer_xp = [10]int{
-	0,
 	5,
 	15,
 	200,
@@ -11,4 +10,4 @@ var Slayer_xp = [10]int{
 	100000,
 	400000,
 	1000000,
-};
+}
