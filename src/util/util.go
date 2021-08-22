@@ -46,6 +46,7 @@ func GetUUID(name string) (mojang *Mojang, err error) {
 }
 
 func GetName(uuid string) string {
+	if uuid == "" { return "bebra" }
 	_, res, err := Client.Get(nil, "https://api.mojang.com/user/profiles/"+uuid+"/names")
 	if err != nil {
 		log.Fatal(err)

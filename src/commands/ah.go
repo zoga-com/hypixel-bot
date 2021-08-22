@@ -21,21 +21,23 @@ func buildAuctions(items *util.AuctionReturn, mojang *util.Mojang) string {
 		go func(auc util.AuctionData) {
 			defer wg.Done()
 			if !auc.Claimed {
+				fmt.Println(auc.GetHighestBid().Bidder)
 				var icon, aucType string
-				if int(time.Now().Unix()) < auc.End {
+				if int(time.Now().Unix()) > auc.End {
 					icon = "✔"
 				} else {
-					icon = "🚫"
+					icon = "⏳"
 				}
-				if !auc.BIN {
+				if auc.BIN {
 					aucType = "BIN"
 				} else {
 					aucType = "Аукцион"
 				}
-				text = append(text, fmt.Sprintf("%s [%s] Shredder\n• 💸 Последняя ставка: %d коинов\n• Ставка от игрока: %s\n• 💭 Тип: %s",
+				text = append(text, fmt.Sprintf("%s [%s] %s\n%s\n• 💭 Тип: %s",
 					icon,
 					auc.Tier,
-					auc.HighestBid,
+					auc.Name,
+					if auc.HighestBid == 0 { fmt.Sprintf("• Истекает через %s\n• 💸 Начальная ставка: %d коинов", auc.StartingBid } ,
 					util.GetName(auc.GetHighestBid().Bidder),
 					aucType))
 			}

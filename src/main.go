@@ -1,7 +1,7 @@
 package main
 
 import (
-	"hypixel-bot/src/longpoll"
+	"hypixel-bot/src/callback"
 )
 
 func main() {
