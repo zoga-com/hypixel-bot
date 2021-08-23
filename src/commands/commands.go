@@ -15,7 +15,7 @@ import (
 )
 
 var commandRegex = regexp.MustCompile("^[./]([^ ]+)( .+)*$")
-var Commands = []*util.Command{Bedwars, Skywars, Skyblock, Nick, Ping}
+var Commands = []*util.Command{Bedwars, Skywars, Skyblock, Nick, Ping, Auction}
 
 func FindCommand(obj events.MessageNewObject, db *sql.DB) {
 	groups := commandRegex.FindStringSubmatch(obj.Message.Text)

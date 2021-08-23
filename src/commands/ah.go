@@ -12,7 +12,7 @@ import (
 func buildAuctions(items *util.AuctionReturn, mojang *util.Mojang) string {
 	text := make([]string, len(items.Auctions))
 
-	text = append(text, "📗 Аукционы игрока "+mojang.Name+":")
+	text = append(text, "📗 Аукционы игрока "+mojang.Name+":\n")
 
 	var wg sync.WaitGroup
 	wg.Add(len(items.Auctions))
@@ -33,14 +33,14 @@ func buildAuctions(items *util.AuctionReturn, mojang *util.Mojang) string {
 				} else {
 					aucType = "Аукцион"
 				}
-				text = append(text, fmt.Sprintf("%s [%s] %s\n%s\n• 💭 Тип: %s",
-					icon,
-					auc.Tier,
-					auc.Name,
-					auc.Name,
-					util.GetName(auc.GetHighestBid().Bidder),
-					aucType))
-			}
+				auction := fmt.Sprintf("%s [%s] %s (%s)\n• Истекает %s\n", icon, auc.Tier, auc.Name, aucType, util.FormatTime(auc.End))
+				if auc.HighestBid == 0 {
+					auction += fmt.Sprintf("• 💸 Начальная ставка: %d коинов\n", auc.StartingBid)
+				} else {
+					auction += fmt.Sprintf("• 💸 Последняя ставка: %d коинов\n• Ставка от игрока: %s\n", auc.HighestBid, util.GetName(auc.GetHighestBid().Bidder))
+				}
+				text = append(text, auction)
+				}
 		}(auc)
 	}
 	wg.Wait()

@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	longpoll.StartLongpoll()
+	callback.StartLongpoll()
 }

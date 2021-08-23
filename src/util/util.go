@@ -9,6 +9,8 @@ import (
 
 	"github.com/valyala/fasthttp"
 
+	"github.com/golang-module/carbon"
+
 	"github.com/SevereCloud/vksdk/v2/api"
 	"github.com/SevereCloud/vksdk/v2/api/params"
 )
@@ -77,6 +79,19 @@ func GetPlayer(name string) (response Player, err error) {
 
 func MatchUsername(name string) bool {
 	return NameRegex.Match([]byte(name))
+}
+
+func FormatTime(unix int) string {
+	log.Println("unix", unix)
+	lang := carbon.NewLanguage()
+	diff := unix/1000 - int(time.Now().Unix())
+	err := lang.SetLocale("ru");
+	if err != nil {
+		log.Fatal(err)
+	}
+	c := carbon.SetLanguage(lang);
+
+	return c.Now().AddSeconds(diff).DiffForHumans()
 }
 
 func SendMessage(peer_id int, message string) (err error) {

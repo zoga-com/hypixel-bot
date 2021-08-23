@@ -228,22 +228,19 @@ type AuctionCache struct {
 }
 
 type AuctionData struct {
-	ID             string `json:"uuid" gorm:"primary_key"`
-	Auctioneer     string
+	ID             string `json:"uuid"`
+	Auctioneer     string `json:"auctioneer"`
 	ProfileID      string `json:"profile_id"`
-	Start          int
-	End            int
+	Start          int	  `json:"start"`
+	End            int	  `json:"end"`
 	Name           string `json:"item_name"`
 	Lore           string `json:"item_lore"`
-	Extra          string
-	Category       string
-	Tier           string
+	Tier           string `json:"tier"`
 	StartingBid    int `json:"starting_bid"`
-	Claimed        bool
-	HighestBid     int       `json:"highest_bid_amount" gorm:"index"`
+	Claimed        bool	`json:"claimed"`
+	HighestBid     int       `json:"highest_bid_amount"`
 	BIN            bool      `json:"bin"`
-	Bids           []BidData `gorm:"foreignKey:AuctionID"`
-	FinalSalePrice int
+	Bids           []BidData `json:"bids"`
 }
 
 type BidData struct {

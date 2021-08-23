@@ -1,4 +1,4 @@
-package longpoll
+package callback
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 	"github.com/SevereCloud/vksdk/v2/callback"
 )
 
-func StartLongpoll() {
+func StartCallback() {
 	log.Println("Started http server on port 80")
 	db, err := sql.Open("sqlite3", "./db/db.sql")
 	if err != nil {log.Fatal(err)}
