@@ -15,7 +15,7 @@ import (
 )
 
 var commandRegex = regexp.MustCompile("^[./]([^ ]+)( .+)*$")
-var Commands = []*util.Command{Bedwars, Skywars, Where, Auction, Skyblock, Nick}
+var Commands = []*util.Command{Bedwars, Skywars, Skyblock, Nick, Ping}
 
 func FindCommand(obj events.MessageNewObject, db *sql.DB) {
 	groups := commandRegex.FindStringSubmatch(obj.Message.Text)
@@ -37,7 +37,7 @@ func FindCommand(obj events.MessageNewObject, db *sql.DB) {
 		wg.Add(len(Commands))
 		for _, it := range Commands {
 			go func(it *util.Command) {
-				if it.Name != command.Name {
+				if !regexp.MustCompile(it.Name).Match([]byte(command.Name)) {
 					return
 				}
 

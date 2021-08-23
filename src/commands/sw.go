@@ -6,7 +6,7 @@ import (
 )
 
 var Skywars = &util.Command{
-	Name:      "sw",
+	Name:      "^(skywars|св|скайварс|sw)$",
 	Args:      1,
 	ForAdmins: false,
 	Trigger: func(name string, peer_id int, from_id int) (err error) {

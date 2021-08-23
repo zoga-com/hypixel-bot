@@ -8,7 +8,7 @@ import (
 )
 
 var Nick = &util.Command{
-	Name:      "name",
+	Name:      "^(ник|имя|nick|name|setname|setnick)$",
 	Args:      1,
 	ForAdmins: false,
 	Trigger: func(name string, peer_id int, from_id int) (err error) {

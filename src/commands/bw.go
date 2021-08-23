@@ -6,7 +6,7 @@ import (
 )
 
 var Bedwars = &util.Command{
-	Name:      "bw",
+	Name:      "^(бв|бедварс|bw|bedwars)$",
 	Args:      1,
 	ForAdmins: false,
 	Trigger: func(name string, peer_id int, from_id int) (err error) {
