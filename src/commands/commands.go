@@ -50,11 +50,10 @@ func FindCommand(obj events.MessageNewObject, db *sql.DB) {
 						util.SendMessage(obj.Message.PeerID, fmt.Sprintf("Произошла ошибка: %s (Игрока не существует?)", err))
 					}
 				} else {
-					db, err := sql.Open("sqlite3", "./db/db.sql")
-					if err != nil { log.Fatal(err) }
 					row := db.QueryRow("SELECT name FROM users WHERE id=" + strconv.FormatInt(int64(obj.Message.FromID), 10))
 					var name string
-					err = row.Scan(&name)
+					err := row.Scan(&name)
+					if name == "" || name == "false" { util.SendMessage(obj.Message.PeerID, "У вас не установлен ник.\nДля установки ника пропишите \"/name ник\""); return }
 					if err != nil { log.Fatal(err) }
 					it.Trigger(name, obj.Message.PeerID, obj.Message.FromID)
 				}

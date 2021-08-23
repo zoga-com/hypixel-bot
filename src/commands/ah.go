@@ -37,7 +37,7 @@ func buildAuctions(items *util.AuctionReturn, mojang *util.Mojang) string {
 					icon,
 					auc.Tier,
 					auc.Name,
-					if auc.HighestBid == 0 { fmt.Sprintf("• Истекает через %s\n• 💸 Начальная ставка: %d коинов", auc.StartingBid } ,
+					auc.Name,
 					util.GetName(auc.GetHighestBid().Bidder),
 					aucType))
 			}

@@ -16,7 +16,7 @@ import (
 var Token = os.Getenv("VK_TOKEN")
 var HypixelKey = os.Getenv("HYPIXEL_KEY")
 var vk = api.NewVK(Token)
-var NameRegex = regexp.MustCompile("[a-zA-Z0-9_]{3,16}")
+var NameRegex = regexp.MustCompile("^[a-zA-Z0-9_]{3,16}$")
 
 var Client = fasthttp.Client{
 	ReadTimeout: time.Second*10,

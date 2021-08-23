@@ -1,6 +1,7 @@
 package util
 
 var Slayer_xp = [10]int{
+	0,
 	5,
 	15,
 	200,
