@@ -18,7 +18,6 @@ import (
 	"github.com/SevereCloud/vksdk/v2/api/params"
 	"github.com/golang/freetype"
 	"github.com/golang/freetype/truetype"
-	"github.com/valyala/fasthttp"
 )
 
 var Skyblock = &util.Command{
@@ -33,7 +32,7 @@ var Skyblock = &util.Command{
 		}
 		profile := &util.Profile{}
 
-		_, res, err := fasthttp.Get(nil, "https://api.slothpixel.me/api/skyblock/profile/"+mojang.Id+"?key="+util.HypixelKey)
+		_, res, err :=  util.Client.Get(nil, "https://api.slothpixel.me/api/skyblock/profile/"+mojang.Id+"?key="+util.HypixelKey)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -43,7 +42,7 @@ var Skyblock = &util.Command{
 			log.Fatal(err)
 		}
 
-		_, res, err = fasthttp.Get(nil, "https://visage.surgeplay.com/full/448/"+mojang.Id)
+		_, res, err = util.Client.Get(nil, "https://visage.surgeplay.com/full/448/"+mojang.Id)
 		if err != nil {
 			log.Fatal(err)
 		}
