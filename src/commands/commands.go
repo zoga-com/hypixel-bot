@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"database/sql"
 	"errors"
 	"fmt"
 	"hypixel-bot/src/util"
@@ -11,13 +10,12 @@ import (
 	"sync"
 
 	"github.com/SevereCloud/vksdk/v2/events"
-	_ "github.com/mattn/go-sqlite3"
 )
 
 var commandRegex = regexp.MustCompile("^[./]([^ ]+)( .+)*$")
 var Commands = []*util.Command{Bedwars, Skywars, Skyblock, Nick, Ping, Auction}
 
-func FindCommand(obj events.MessageNewObject, db *sql.DB) {
+func FindCommand(obj events.MessageNewObject) {
 	groups := commandRegex.FindStringSubmatch(obj.Message.Text)
 	var args []string
 
@@ -50,7 +48,7 @@ func FindCommand(obj events.MessageNewObject, db *sql.DB) {
 						util.SendMessage(obj.Message.PeerID, fmt.Sprintf("Произошла ошибка: %s (Игрока не существует?)", err))
 					}
 				} else {
-					row := db.QueryRow("SELECT name FROM users WHERE id=" + strconv.FormatInt(int64(obj.Message.FromID), 10))
+					row := util.DB.QueryRow("SELECT name FROM users WHERE id=" + strconv.FormatInt(int64(obj.Message.FromID), 10))
 					var name string
 					err := row.Scan(&name)
 					if name == "" || name == "false" { util.SendMessage(obj.Message.PeerID, "У вас не установлен ник.\nДля установки ника пропишите \"/name ник\""); return }
