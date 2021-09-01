@@ -2,6 +2,7 @@ package util
 
 import (
 	"database/sql"
+	"errors"
 	"encoding/json"
 	"log"
 	"os"
@@ -35,10 +36,12 @@ func GetHypixelApi(method string, args string) (response string, err error) {
 }
 
 func GetUUID(name string) (mojang *Mojang, err error) {
-	_, res, err := Client.Get(nil, "https://api.mojang.com/users/profiles/minecraft/"+name)
-
+	code, res, err := Client.Get(nil, "https://api.mojang.com/users/profiles/minecraft/"+name)
 	if err != nil {
 		return
+	}
+	if code != 200 {
+		return nil, errors.New("Несуществующий ник")
 	}
 
 	mojang = &Mojang{}
