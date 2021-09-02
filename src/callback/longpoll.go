@@ -11,6 +11,11 @@ import (
 	"github.com/SevereCloud/vksdk/v2/longpoll-bot"
 )
 
+/*
+ * Вы можете спросить: "Какого хуя лонгполл лежит в папке с названием каллбек?"
+ * Отвечу на данный вопрос: я сам не ебу
+ */
+
 func StartLongpoll() {
 	vk := api.NewVK(util.Token)
 

@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"hypixel-bot/src/util"
-	"log"
 	"regexp"
 	"strconv"
 	"sync"
@@ -43,7 +42,9 @@ func FindCommand(obj events.MessageNewObject) {
 					var err error
 					if util.MatchUsername(args[1]) {
 						err = it.Trigger(args[1], obj.Message.PeerID, obj.Message.FromID)
-					} else { err = errors.New("Несуществующий ник.") }
+					} else {
+						err = errors.New("Несуществующий ник.")
+					}
 					if err != nil {
 						util.SendMessage(obj.Message.PeerID, fmt.Sprintf("Произошла ошибка: %s (Игрока не существует?)", err))
 					}
@@ -51,9 +52,17 @@ func FindCommand(obj events.MessageNewObject) {
 					row := util.DB.QueryRow("SELECT name FROM users WHERE id=" + strconv.FormatInt(int64(obj.Message.FromID), 10))
 					var name string
 					err := row.Scan(&name)
-					if name == "" || name == "false" { util.SendMessage(obj.Message.PeerID, "У вас не установлен ник.\nДля установки ника пропишите \"/name ник\""); return }
-					if err != nil { log.Fatal(err) }
-					it.Trigger(name, obj.Message.PeerID, obj.Message.FromID)
+					if name == "" || name == "false" {
+						_ = util.SendMessage(obj.Message.PeerID, "У вас не установлен ник.\nДля установки ника пропишите \"/name ник\"")
+						return
+					}
+					if err != nil {
+						util.SendMessage(obj.Message.PeerID, fmt.Sprintf("Произошла ошибка: %s (Игрока не существует?)", err))
+					}
+					err = it.Trigger(name, obj.Message.PeerID, obj.Message.FromID)
+					if err != nil {
+						util.SendMessage(obj.Message.PeerID, fmt.Sprintf("Произошла ошибка: %s (Игрока не существует?)", err))
+					}
 				}
 			}(it)
 		}

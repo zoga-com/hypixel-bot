@@ -2,8 +2,8 @@ package util
 
 import (
 	"database/sql"
-	"errors"
 	"encoding/json"
+	"errors"
 	"log"
 	"os"
 	"regexp"
@@ -24,7 +24,7 @@ var NameRegex = regexp.MustCompile("^[a-zA-Z0-9_]{3,16}$")
 var DB *sql.DB
 
 var Client = fasthttp.Client{
-	ReadTimeout: time.Second*10,
+	ReadTimeout: time.Second * 10,
 }
 
 func GetHypixelApi(method string, args string) (response string, err error) {
@@ -53,7 +53,9 @@ func GetUUID(name string) (mojang *Mojang, err error) {
 }
 
 func GetName(uuid string) string {
-	if uuid == "" { return "bebra" }
+	if uuid == "" {
+		return "bebra"
+	}
 	_, res, err := Client.Get(nil, "https://api.mojang.com/user/profiles/"+uuid+"/names")
 	if err != nil {
 		log.Fatal(err)
@@ -90,11 +92,11 @@ func FormatTime(unix int) string {
 	log.Println("unix", unix)
 	lang := carbon.NewLanguage()
 	diff := unix/1000 - int(time.Now().Unix())
-	err := lang.SetLocale("ru");
+	err := lang.SetLocale("ru")
 	if err != nil {
 		log.Fatal(err)
 	}
-	c := carbon.SetLanguage(lang);
+	c := carbon.SetLanguage(lang)
 
 	return c.Now().AddSeconds(diff).DiffForHumans()
 }

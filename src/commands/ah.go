@@ -40,7 +40,7 @@ func buildAuctions(items *util.AuctionReturn, mojang *util.Mojang) string {
 					auction += fmt.Sprintf("• 💸 Последняя ставка: %d коинов\n• Ставка от игрока: %s\n", auc.HighestBid, util.GetName(auc.GetHighestBid().Bidder))
 				}
 				text = append(text, auction)
-				}
+			}
 		}(auc)
 	}
 	wg.Wait()

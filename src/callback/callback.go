@@ -2,12 +2,12 @@ package callback
 
 import (
 	"context"
-	"net/http"
 	"hypixel-bot/src/commands"
 	"log"
+	"net/http"
 
-	"github.com/SevereCloud/vksdk/v2/events"
 	"github.com/SevereCloud/vksdk/v2/callback"
+	"github.com/SevereCloud/vksdk/v2/events"
 )
 
 func StartCallback() {
@@ -20,13 +20,15 @@ func StartCallback() {
 
 	cb.MessageNew(func(ctx context.Context, obj events.MessageNewObject) {
 		if obj.Message.PeerID != 2000000025 {
-		log.Printf("%d: %s from %d", obj.Message.PeerID, obj.Message.Text, obj.Message.FromID)
-		go commands.FindCommand(obj)
-	}
+			log.Printf("%d: %s from %d", obj.Message.PeerID, obj.Message.Text, obj.Message.FromID)
+			go commands.FindCommand(obj)
+		}
 	})
 
 	http.HandleFunc("/callback", cb.HandleFunc)
 
-	http.ListenAndServe(":80", nil)
+	if err := http.ListenAndServe(":80", nil); err != nil {
+		log.Fatal(err)
+	}
 
 }

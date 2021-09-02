@@ -32,7 +32,7 @@ var Skyblock = &util.Command{
 		}
 		profile := &util.Profile{}
 
-		_, res, err :=  util.Client.Get(nil, "https://api.slothpixel.me/api/skyblock/profile/"+mojang.Id+"?key="+util.HypixelKey)
+		_, res, err := util.Client.Get(nil, "https://api.slothpixel.me/api/skyblock/profile/"+mojang.Id+"?key="+util.HypixelKey)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -130,8 +130,4 @@ var Skyblock = &util.Command{
 		}
 		return
 	},
-}
-
-func Sb(name string, peer int, from_id int) {
-	Skyblock.Trigger(name, peer, from_id)
 }

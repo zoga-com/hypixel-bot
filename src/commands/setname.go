@@ -23,19 +23,23 @@ var Nick = &util.Command{
 		}
 
 		statement, err := db.Prepare(`INSERT INTO users (id, name) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET id = ?, name = ?`)
-		if err != nil { return }
+		if err != nil {
+			return
+		}
 
 		_, err = statement.Exec(from_id, mojang.Name, from_id, mojang.Name)
-		if err != nil { return }
+		if err != nil {
+			return
+		}
 
 		/*
-        rows := db.QueryRow("SELECT name FROM users WHERE id =" + strconv.FormatInt(int64(from_id), 10))
-        if err != nil {return}
-        var username string
+		        rows := db.QueryRow("SELECT name FROM users WHERE id =" + strconv.FormatInt(int64(from_id), 10))
+		        if err != nil {return}
+		        var username string
 
-        err = rows.Scan(&username)
-        if err != nil {return}
-		util.SendMessage(peer_id, fmt.Sprintf("Вы теперь %s", username))
+		        err = rows.Scan(&username)
+		        if err != nil {return}
+				util.SendMessage(peer_id, fmt.Sprintf("Вы теперь %s", username))
 		*/
 
 		return
