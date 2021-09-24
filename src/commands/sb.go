@@ -10,6 +10,7 @@ import (
 	"image/png"
 	"io/ioutil"
 	"log"
+	"regexp"
 	"strings"
 
 	"hypixel-bot/src/util"
@@ -21,7 +22,7 @@ import (
 )
 
 var Skyblock = &util.Command{
-	Name:      "^(skyblock|сб|скайблок|sb)$",
+	Name:      regexp.MustCompile("^(skyblock|сб|скайблок|sb)$"),
 	Args:      1,
 	ForAdmins: false,
 	Trigger: func(name string, peer_id int, from_id int) (err error) {

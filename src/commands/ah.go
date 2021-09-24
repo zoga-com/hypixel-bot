@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"hypixel-bot/src/util"
+	"regexp"
 	"strings"
 	"sync"
 	"time"
@@ -49,7 +50,7 @@ func buildAuctions(items *util.AuctionReturn, mojang *util.Mojang) string {
 }
 
 var Auction = &util.Command{
-	Name:      "ah",
+	Name:      regexp.MustCompile("ah"),
 	Args:      1,
 	ForAdmins: false,
 	Trigger: func(name string, peer_id int, from_id int) (err error) {

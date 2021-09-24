@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"hypixel-bot/src/util"
+	"regexp"
 	"time"
 )
 
 var Where = &util.Command{
-	Name:      "where",
+	Name:      regexp.MustCompile("where"),
 	Args:      1,
 	ForAdmins: false,
 	Trigger: func(name string, peer_id int, from_id int) (err error) {

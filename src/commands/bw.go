@@ -3,10 +3,11 @@ package commands
 import (
 	"fmt"
 	"hypixel-bot/src/util"
+	"regexp"
 )
 
 var Bedwars = &util.Command{
-	Name:      "^(бв|бедварс|bw|bedwars)$",
+	Name:      regexp.MustCompile("^(бв|бедварс|bw|bedwars)$"),
 	Args:      1,
 	ForAdmins: false,
 	Trigger: func(name string, peer_id int, from_id int) (err error) {

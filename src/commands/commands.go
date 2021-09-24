@@ -12,7 +12,7 @@ import (
 )
 
 var commandRegex = regexp.MustCompile("^[./]([^ ]+)( .+)*$")
-var Commands = []*util.Command{Bedwars, Skywars, Skyblock, Nick, Ping, Auction}
+var Commands = []*util.Command{Bedwars, Skywars, Skyblock, Nick}
 
 func FindCommand(obj events.MessageNewObject) {
 	groups := commandRegex.FindStringSubmatch(obj.Message.Text)
@@ -25,7 +25,10 @@ func FindCommand(obj events.MessageNewObject) {
 			args = []string{}
 		}
 
-		command := &util.Command{
+		command := struct{
+			Name string
+			Args int
+		}{
 			Name: groups[1],
 			Args: len(args) - 1,
 		}
@@ -34,35 +37,29 @@ func FindCommand(obj events.MessageNewObject) {
 		wg.Add(len(Commands))
 		for _, it := range Commands {
 			go func(it *util.Command) {
-				if !regexp.MustCompile(it.Name).Match([]byte(command.Name)) {
+				var err error
+				if !it.Name.Match([]byte(command.Name)) {
 					return
 				}
 
 				if it.Args == command.Args {
-					var err error
 					if util.MatchUsername(args[1]) {
 						err = it.Trigger(args[1], obj.Message.PeerID, obj.Message.FromID)
 					} else {
 						err = errors.New("Несуществующий ник.")
 					}
-					if err != nil {
-						util.SendMessage(obj.Message.PeerID, fmt.Sprintf("Произошла ошибка: %s (Игрока не существует?)", err))
-					}
 				} else {
 					row := util.DB.QueryRow("SELECT name FROM users WHERE id=" + strconv.FormatInt(int64(obj.Message.FromID), 10))
 					var name string
-					err := row.Scan(&name)
-					if name == "" || name == "false" {
+					err = row.Scan(&name)
+					if name == "" || name == "false" || err != nil {
 						_ = util.SendMessage(obj.Message.PeerID, "У вас не установлен ник.\nДля установки ника пропишите \"/name ник\"")
 						return
 					}
-					if err != nil {
-						util.SendMessage(obj.Message.PeerID, fmt.Sprintf("Произошла ошибка: %s (Игрока не существует?)", err))
-					}
 					err = it.Trigger(name, obj.Message.PeerID, obj.Message.FromID)
-					if err != nil {
-						util.SendMessage(obj.Message.PeerID, fmt.Sprintf("Произошла ошибка: %s (Игрока не существует?)", err))
-					}
+				}
+				if err != nil {
+					util.SendMessage(obj.Message.PeerID, fmt.Sprintf("Произошла ошибка: %s (Игрока не существует?)", err))
 				}
 			}(it)
 		}

@@ -3,12 +3,13 @@ package commands
 import (
 	"database/sql"
 	"hypixel-bot/src/util"
+	"regexp"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
 var Nick = &util.Command{
-	Name:      "^(ник|имя|nick|name|setname|setnick)$",
+	Name:      regexp.MustCompile("^(ник|имя|nick|name|setname|setnick)$"),
 	Args:      1,
 	ForAdmins: false,
 	Trigger: func(name string, peer_id int, from_id int) (err error) {
@@ -33,13 +34,13 @@ var Nick = &util.Command{
 		}
 
 		/*
-		        rows := db.QueryRow("SELECT name FROM users WHERE id =" + strconv.FormatInt(int64(from_id), 10))
-		        if err != nil {return}
-		        var username string
+			        rows := db.QueryRow("SELECT name FROM users WHERE id =" + strconv.FormatInt(int64(from_id), 10))
+			        if err != nil {return}
+			        var username string
 
-		        err = rows.Scan(&username)
-		        if err != nil {return}
-				util.SendMessage(peer_id, fmt.Sprintf("Вы теперь %s", username))
+			        err = rows.Scan(&username)
+			        if err != nil {return}
+					util.SendMessage(peer_id, fmt.Sprintf("Вы теперь %s", username))
 		*/
 
 		return

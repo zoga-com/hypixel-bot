@@ -1,6 +1,9 @@
 package util
 
-import "time"
+import (
+	"time"
+	"regexp"
+)
 
 // huge fucking player struct
 
@@ -69,7 +72,7 @@ type Name struct {
 // bot command
 
 type Command struct {
-	Name      string
+	Name      *regexp.Regexp
 	Args      int
 	ForAdmins bool
 	Trigger   func(name string, peer_id int, from_id int) (err error)
