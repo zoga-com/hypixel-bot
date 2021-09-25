@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
+	"image/png"
 	"log"
 	"os"
 	"regexp"
@@ -18,6 +19,7 @@ import (
 )
 
 var Token = os.Getenv("VK_TOKEN")
+var Encoder = png.Encoder{CompressionLevel: -3}
 var HypixelKey = os.Getenv("HYPIXEL_KEY")
 var vk = api.NewVK(Token)
 var NameRegex = regexp.MustCompile("^[a-zA-Z0-9_]{3,16}$")

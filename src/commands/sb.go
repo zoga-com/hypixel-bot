@@ -7,7 +7,6 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
-	"image/png"
 	"io/ioutil"
 	"log"
 	"regexp"
@@ -111,7 +110,7 @@ var Skyblock = &util.Command{
 		draw.Draw(rgba, r2, skin, image.Point{0, 0}, draw.Over)
 
 		buffer := &bytes.Buffer{}
-		err = png.Encode(buffer, rgba)
+		err = util.Encoder.Encode(buffer, rgba)
 		if err != nil {
 			return
 		}
