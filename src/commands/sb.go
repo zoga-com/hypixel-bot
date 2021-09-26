@@ -2,6 +2,7 @@ package commands
 
 import (
 	"bytes"
+	"sync"
 	"encoding/json"
 	"fmt"
 	"image"
@@ -32,22 +33,32 @@ var Skyblock = &util.Command{
 		}
 		profile := &util.Profile{}
 
-		_, res, err := util.Client.Get(nil, "https://api.slothpixel.me/api/skyblock/profile/"+mojang.Id+"?key="+util.HypixelKey)
-		if err != nil {
-			log.Fatal(err)
-		}
+		var wg sync.WaitGroup
+		wg.Add(2)
 
-		err = json.Unmarshal([]byte(res), &profile)
-		if err != nil {
-			log.Fatal(err)
-		}
+		go func() {
+			_, res, err := util.Client.Get(nil, "https://api.slothpixel.me/api/skyblock/profile/"+mojang.Id+"?key="+util.HypixelKey)
+			if err != nil {
+				log.Fatal(err)
+			}
+			err = json.Unmarshal([]byte(res), &profile)
+			if err != nil {
+				log.Fatal(err)
+			}
+			wg.Done()
+		}()
+		var skin image.Image
+		go func() {
+			_, res, err := util.Client.Get(nil, "https://visage.surgeplay.com/full/448/"+mojang.Id)
+			if err != nil {
+				log.Fatal(err)
+			}
+			skin, _, err = image.Decode(bytes.NewReader(res))
+			wg.Done()
+		}()
 
-		_, res, err = util.Client.Get(nil, "https://visage.surgeplay.com/full/448/"+mojang.Id)
-		if err != nil {
-			log.Fatal(err)
-		}
+		wg.Wait()
 
-		skin, _, err := image.Decode(bytes.NewReader(res))
 		if err != nil {
 			log.Fatal(err)
 		}

@@ -17,6 +17,9 @@ var Commands = []*util.Command{Bedwars, Skywars, Skyblock, Nick}
 
 func FindCommand(obj events.MessageNewObject) {
 	groups := commandRegex.FindStringSubmatch(obj.Message.Text)
+	if groups == nil {
+		return
+	}
 	var args []string = strings.Split(groups[2], " ")
 
 	if groups != nil {
