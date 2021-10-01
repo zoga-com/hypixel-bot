@@ -15,7 +15,6 @@ import (
 
 	"hypixel-bot/src/util"
 
-	"github.com/SevereCloud/vksdk/v2/api"
 	"github.com/SevereCloud/vksdk/v2/api/params"
 	"github.com/golang/freetype"
 	"github.com/golang/freetype/truetype"
@@ -26,7 +25,6 @@ var Skyblock = &util.Command{
 	Args:      1,
 	ForAdmins: false,
 	Trigger: func(name string, peer_id int, from_id int) (err error) {
-		vk := api.NewVK(util.Token)
 		mojang, err := util.GetUUID(name)
 		if err != nil {
 			return
@@ -126,7 +124,7 @@ var Skyblock = &util.Command{
 			return
 		}
 
-		photosPhoto, err := vk.UploadMessagesPhoto(198657266, buffer)
+		photosPhoto, err := util.VK.UploadMessagesPhoto(198657266, buffer)
 		if err != nil {
 			log.Fatalf("Error uploading photo: %s", err)
 		}
@@ -135,7 +133,7 @@ var Skyblock = &util.Command{
 		builder.RandomID(0)
 		builder.PeerID(peer_id)
 		builder.Attachment(fmt.Sprintf("photo%d_%d_%s", photosPhoto[0].OwnerID, photosPhoto[0].ID, photosPhoto[0].AccessKey))
-		_, err = vk.MessagesSend(builder.Params)
+		_, err = util.VK.MessagesSend(builder.Params)
 		if err != nil {
 			log.Fatal(err)
 		}
