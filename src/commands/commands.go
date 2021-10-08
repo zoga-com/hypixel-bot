@@ -2,11 +2,11 @@ package commands
 
 import (
 	"errors"
-	"hypixel-bot/src/util"
 	"fmt"
+	"hypixel-bot/src/util"
 	"regexp"
-	"strings"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/SevereCloud/vksdk/v2/events"
@@ -29,7 +29,7 @@ func FindCommand(obj events.MessageNewObject) {
 			args = []string{}
 		}
 
-		command := struct{
+		command := struct {
 			Name string
 			Args int
 		}{

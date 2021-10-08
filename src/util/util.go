@@ -35,12 +35,12 @@ func GetHypixelApi(method string, args string) (response string, err error) {
 		return
 	}
 	switch code {
-		case 200:
-			return string(res), err
-		case 403:
-			return "", errors.New("Invalid API key")
-		case 429:
-			return "", errors.New("Key throttle")
+	case 200:
+		return string(res), err
+	case 403:
+		return "", errors.New("Invalid API key")
+	case 429:
+		return "", errors.New("Key throttle")
 	}
 	return
 }
@@ -92,7 +92,7 @@ func GetPlayer(name string) (response Player, err error) {
 		return
 	}
 	return player.Player, err
-	}
+}
 
 func MatchUsername(name string) bool {
 	return NameRegex.Match([]byte(name))

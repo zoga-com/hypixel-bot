@@ -2,7 +2,6 @@ package commands
 
 import (
 	"bytes"
-	"sync"
 	"encoding/json"
 	"fmt"
 	"image"
@@ -12,6 +11,7 @@ import (
 	"log"
 	"regexp"
 	"strings"
+	"sync"
 
 	"hypixel-bot/src/util"
 
