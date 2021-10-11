@@ -8,7 +8,6 @@ import (
 	"image/color"
 	"image/draw"
 	"io/ioutil"
-	"log"
 	"regexp"
 	"strings"
 	"sync"
@@ -37,11 +36,11 @@ var Skyblock = &util.Command{
 		go func() {
 			_, res, err := util.Client.Get(nil, "https://api.slothpixel.me/api/skyblock/profile/"+mojang.Id+"?key="+util.HypixelKey)
 			if err != nil {
-				log.Fatal(err)
+				return
 			}
 			err = json.Unmarshal([]byte(res), &profile)
 			if err != nil {
-				log.Fatal(err)
+				return
 			}
 			wg.Done()
 		}()
@@ -49,16 +48,19 @@ var Skyblock = &util.Command{
 		go func() {
 			_, res, err := util.Client.Get(nil, "https://visage.surgeplay.com/full/448/"+mojang.Id)
 			if err != nil {
-				log.Fatal(err)
+				return
 			}
 			skin, _, err = image.Decode(bytes.NewReader(res))
+			if err != nil {
+				return
+			}
 			wg.Done()
 		}()
 
 		wg.Wait()
 
 		if err != nil {
-			log.Fatal(err)
+			return
 		}
 		member := profile.Members[mojang.Id]
 
@@ -108,7 +110,6 @@ var Skyblock = &util.Command{
 		for _, s := range text {
 			_, err = c.DrawString(s, pt)
 			if err != nil {
-				log.Println(err)
 				return
 			}
 			pt.Y += c.PointToFixed(opts.Size * 1.5)
@@ -126,7 +127,7 @@ var Skyblock = &util.Command{
 
 		photosPhoto, err := util.VK.UploadMessagesPhoto(198657266, buffer)
 		if err != nil {
-			log.Fatalf("Error uploading photo: %s", err)
+			return
 		}
 
 		builder := params.NewMessagesSendBuilder()
@@ -135,7 +136,7 @@ var Skyblock = &util.Command{
 		builder.Attachment(fmt.Sprintf("photo%d_%d_%s", photosPhoto[0].OwnerID, photosPhoto[0].ID, photosPhoto[0].AccessKey))
 		_, err = util.VK.MessagesSend(builder.Params)
 		if err != nil {
-			log.Fatal(err)
+			return
 		}
 		return
 	},

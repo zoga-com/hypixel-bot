@@ -63,7 +63,7 @@ func FindCommand(obj events.MessageNewObject) {
 					err = it.Trigger(name, obj.Message.PeerID, obj.Message.FromID)
 				}
 				if err != nil {
-					util.SendMessage(obj.Message.PeerID, fmt.Sprintf("Произошла ошибка: %s (Игрока не существует?)", err))
+					_ = util.SendMessage(obj.Message.PeerID, fmt.Sprintf("Произошла ошибка: %s (Игрока не существует?)", err))
 				}
 			}(it)
 		}
