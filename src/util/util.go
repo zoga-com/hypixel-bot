@@ -21,7 +21,7 @@ import (
 var Token = os.Getenv("VK_TOKEN")
 var Encoder = png.Encoder{CompressionLevel: -3}
 var HypixelKey = os.Getenv("HYPIXEL_KEY")
-var vk = api.NewVK(Token)
+var VK = api.NewVK(Token)
 var NameRegex = regexp.MustCompile("^[a-zA-Z0-9_]{3,16}$")
 var DB *sql.DB
 
@@ -117,7 +117,7 @@ func SendMessage(peer_id int, message string) (err error) {
 	msg.RandomID(0)
 	msg.PeerID(peer_id)
 
-	_, err = vk.MessagesSend(msg.Params)
+	_, err = VK.MessagesSend(msg.Params)
 	if err != nil {
 		return
 	}
