@@ -13,7 +13,7 @@ import (
 )
 
 var commandRegex = regexp.MustCompile("^[./]([^ ]+)( .+)*$")
-var Commands = []*util.Command{Bedwars, Skywars, Skyblock, Nick}
+var Commands = []*util.Command{Bedwars, Skywars, Skyblock, Nick, Where}
 
 func FindCommand(obj *events.MessageNewObject) {
 	groups := commandRegex.FindStringSubmatch(obj.Message.Text)
