@@ -2,7 +2,7 @@ package callback
 
 import (
 	"context"
-	"hypixel-bot/src/commands"
+	"hypixel-bot/cmd/commands"
 	"log"
 	"net/http"
 
@@ -21,7 +21,7 @@ func StartCallback() {
 	cb.MessageNew(func(ctx context.Context, obj events.MessageNewObject) {
 		if obj.Message.PeerID != 2000000025 {
 			log.Printf("%d: %s from %d", obj.Message.PeerID, obj.Message.Text, obj.Message.FromID)
-			go commands.FindCommand(obj)
+			go commands.FindCommand(&obj)
 		}
 	})
 

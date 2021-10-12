@@ -3,7 +3,7 @@ package commands
 import (
 	"encoding/json"
 	"fmt"
-	"hypixel-bot/src/util"
+	"hypixel-bot/cmd/util"
 	"regexp"
 	"time"
 )

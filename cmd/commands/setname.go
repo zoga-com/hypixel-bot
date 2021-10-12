@@ -2,7 +2,7 @@ package commands
 
 import (
 	"database/sql"
-	"hypixel-bot/src/util"
+	"hypixel-bot/cmd/util"
 	"regexp"
 
 	_ "github.com/mattn/go-sqlite3"

@@ -7,12 +7,11 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
-	"io/ioutil"
 	"regexp"
 	"strings"
 	"sync"
 
-	"hypixel-bot/src/util"
+	"hypixel-bot/cmd/util"
 
 	"github.com/SevereCloud/vksdk/v2/api/params"
 	"github.com/golang/freetype"
@@ -92,10 +91,8 @@ var Skyblock = &util.Command{
 			member.Slayers.Zombie.Xp+member.Slayers.Enderman.Xp+member.Slayers.Spider.Xp+member.Slayers.Wolf.Xp,
 			util.GetSlayerFromXp(member.Slayers.Zombie.Xp), util.GetSlayerFromXp(member.Slayers.Spider.Xp), util.GetSlayerFromXp(member.Slayers.Wolf.Xp), util.GetSlayerFromXp(member.Slayers.Enderman.Xp),
 			member.Slayers.Zombie.Xp, member.Slayers.Spider.Xp, member.Slayers.Wolf.Xp, member.Slayers.Enderman.Xp)
-		fontBytes, _ := ioutil.ReadFile("../resources/Ubuntu.ttf")
-		f, _ := truetype.Parse(fontBytes)
-		opts := truetype.Options{}
-		opts.Size = 12
+		f, _ := truetype.Parse(util.Font)
+		opts := truetype.Options{Size: 12}
 		bg, fg := color.RGBA{46, 52, 64, 255}, color.RGBA{129, 161, 193, 255}
 		rgba := image.NewRGBA(image.Rect(0, 0, 600, 600))
 		draw.Draw(rgba, rgba.Bounds(), &image.Uniform{bg}, image.Point{}, draw.Src)

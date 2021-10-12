@@ -2,7 +2,7 @@ package commands
 
 import (
 	"fmt"
-	"hypixel-bot/src/util"
+	"hypixel-bot/cmd/util"
 	"regexp"
 )
 

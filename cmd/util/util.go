@@ -2,6 +2,7 @@ package util
 
 import (
 	"database/sql"
+	_ "embed"
 	"encoding/json"
 	"errors"
 	"image/png"
@@ -24,6 +25,9 @@ var HypixelKey = os.Getenv("HYPIXEL_KEY")
 var VK = api.NewVK(Token)
 var NameRegex = regexp.MustCompile("^[a-zA-Z0-9_]{3,16}$")
 var DB *sql.DB
+
+//go:embed Ubuntu.ttf
+var Font []byte
 
 var Client = fasthttp.Client{
 	ReadTimeout: time.Second * 10,

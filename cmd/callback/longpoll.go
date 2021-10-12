@@ -2,8 +2,8 @@ package callback
 
 import (
 	"context"
-	"hypixel-bot/src/commands"
-	"hypixel-bot/src/util"
+	"hypixel-bot/cmd/commands"
+	"hypixel-bot/cmd/util"
 	"log"
 
 	"github.com/SevereCloud/vksdk/v2/api"
@@ -30,7 +30,7 @@ func StartLongpoll() {
 	}
 	lp.MessageNew(func(_ context.Context, obj events.MessageNewObject) {
 		log.Printf("%d: %s from %d", obj.Message.PeerID, obj.Message.Text, obj.Message.FromID)
-		commands.FindCommand(obj)
+		commands.FindCommand(&obj)
 	})
 
 	log.Println("Start Long Poll")

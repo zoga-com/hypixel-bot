@@ -2,8 +2,8 @@ package main
 
 import (
 	"database/sql"
-	"hypixel-bot/src/callback"
-	"hypixel-bot/src/util"
+	"hypixel-bot/cmd/callback"
+	"hypixel-bot/cmd/util"
 	"log"
 
 	_ "github.com/mattn/go-sqlite3"

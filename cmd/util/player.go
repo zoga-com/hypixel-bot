@@ -270,7 +270,7 @@ type EndedAuction struct {
 	BIN           bool `json:"bin"`
 }
 
-func (auction AuctionData) GetHighestBid() BidData {
+func (auction *AuctionData) GetHighestBid() BidData {
 	highest := BidData{Amount: 0}
 	for _, bid := range auction.Bids {
 		if bid.Amount > highest.Amount {

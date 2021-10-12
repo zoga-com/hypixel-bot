@@ -3,7 +3,7 @@ package commands
 import (
 	"errors"
 	"fmt"
-	"hypixel-bot/src/util"
+	"hypixel-bot/cmd/util"
 	"regexp"
 	"strconv"
 	"strings"
@@ -15,7 +15,7 @@ import (
 var commandRegex = regexp.MustCompile("^[./]([^ ]+)( .+)*$")
 var Commands = []*util.Command{Bedwars, Skywars, Skyblock, Nick}
 
-func FindCommand(obj events.MessageNewObject) {
+func FindCommand(obj *events.MessageNewObject) {
 	groups := commandRegex.FindStringSubmatch(obj.Message.Text)
 	if groups == nil {
 		return
@@ -53,7 +53,7 @@ func FindCommand(obj events.MessageNewObject) {
 						err = errors.New("Несуществующий ник.")
 					}
 				} else if it.Args != 0 {
-					row := util.DB.QueryRow("SELECT name FROM users WHERE id=" + strconv.FormatInt(int64(obj.Message.FromID), 10))
+					row := util.DB.QueryRow("SELECT name FROM users WHERE id = ?", strconv.FormatInt(int64(obj.Message.FromID), 10))
 					var name string
 					err = row.Scan(&name)
 					if name == "" || name == "false" || err != nil {
