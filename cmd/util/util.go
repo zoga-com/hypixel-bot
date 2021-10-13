@@ -17,6 +17,7 @@ import (
 
 	"github.com/SevereCloud/vksdk/v2/api"
 	"github.com/SevereCloud/vksdk/v2/api/params"
+	"github.com/nleeper/goment"
 )
 
 var Token = os.Getenv("VK_TOKEN")
@@ -115,17 +116,18 @@ func FormatTime(unix int) string {
 	return c.Now().AddSeconds(diff).DiffForHumans()
 }
 
-func FormatTime2(unix int, unix2 int) string {
+func MomentFormat(unix int, unix2 int) string {
 	log.Println("unix", unix)
-	lang := carbon.NewLanguage()
-	diff := unix/1000 - unix2/1000
-	err := lang.SetLocale("ru")
+	log.Println("unix2", unix2)
+	//lang := carbon.NewLanguage()
+	form := goment.New(unix/1000 - unix2/1000).format('LTS')
+	err := goment.SetLocale("ru")
 	if err != nil {
 		log.Fatal(err)
 	}
-	c := carbon.SetLanguage(lang)
+	//c := carbon.SetLanguage(lang)
 
-	return c.Now().AddSeconds(diff).DiffForHumans()
+	return form
 }
 
 func SendMessage(peer_id int, message string) (err error) {
