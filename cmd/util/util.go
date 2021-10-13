@@ -115,6 +115,19 @@ func FormatTime(unix int) string {
 	return c.Now().AddSeconds(diff).DiffForHumans()
 }
 
+func FormatTime2(unix int, unix2 int) string {
+	log.Println("unix", unix)
+	lang := carbon.NewLanguage()
+	diff := unix/1000 - unix2/1000
+	err := lang.SetLocale("ru")
+	if err != nil {
+		log.Fatal(err)
+	}
+	c := carbon.SetLanguage(lang)
+
+	return c.Now().AddSeconds(diff).DiffForHumans()
+}
+
 func SendMessage(peer_id int, message string) (err error) {
 	msg := params.NewMessagesSendBuilder()
 	msg.Message(message)
