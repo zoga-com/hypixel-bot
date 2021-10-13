@@ -120,7 +120,7 @@ func MomentFormat(unix int, unix2 int) string {
 	log.Println("unix", unix)
 	log.Println("unix2", unix2)
 	//lang := carbon.NewLanguage()
-	form := goment.New(unix/1000 - unix2/1000).format('LTS')
+	form := goment.New(time.Unix(unix/1000 - unix2/1000)).format('LTS')
 	err := goment.SetLocale("ru")
 	if err != nil {
 		log.Fatal(err)
