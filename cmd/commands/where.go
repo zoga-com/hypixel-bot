@@ -40,7 +40,7 @@ var Where = &util.Command{
 			message := fmt.Sprintf("Игрок %s онлайн на сервере %s, %s", mojang.Name, status.Session.GameType, status.Session.Mode)
 			err = util.SendMessage(peer_id, message)
 		} else {
-			message := fmt.Sprintf("Игрок %s был в сети %s (Сессия длилась %d / %d)", mojang.Name, time.Unix(status2.Player.LastLogout/1000, 0).Format("02.01.2006, в 15:04"), util.FormatTime(status2.Player.LastLogout, status2.Player.LastLogin), util.FormatTime2(status2.Player.LastLogout))
+			message := fmt.Sprintf("Игрок %s был в сети %s (Сессия длилась %d / %d)", mojang.Name, time.Unix(status2.Player.LastLogout/1000, 0).Format("02.01.2006, в 15:04"), util.FormatTime2(int(status2.Player.LastLogout), int(status2.Player.LastLogin)), util.FormatTime(int(status2.Player.LastLogout)))
 			err = util.SendMessage(peer_id, message)
 		}
 		return
