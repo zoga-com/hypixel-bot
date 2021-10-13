@@ -116,18 +116,12 @@ func FormatTime(unix int) string {
 	return c.Now().AddSeconds(diff).DiffForHumans()
 }
 
-func MomentFormat(unix int, unix2 int) string {
+func MomentFormat(unix int, unix2 int) (str string, err error) {
 	log.Println("unix", unix)
 	log.Println("unix2", unix2)
-	//lang := carbon.NewLanguage()
-	form := goment.New(time.Unix(unix/1000 - unix2/1000)).format('LTS')
-	err := goment.SetLocale("ru")
-	if err != nil {
-		log.Fatal(err)
-	}
-	//c := carbon.SetLanguage(lang)
-
-	return form
+	//goment.New(time.Unix(int64(unix/1000) - int64(unix2/1000), 0)).format('LTS')
+	goment.SetLocale("ru")
+	return goment.New(time.Unix(int64(unix/1000) - int64(unix2/1000), 0)).format('LTS')
 }
 
 func SendMessage(peer_id int, message string) (err error) {
